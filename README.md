@@ -15,7 +15,11 @@ Thw program shows statistics based on the user's inputs.
 
 ### Files
 **bikeshare.py** 
-Kindly run the python script to use the program
+Kindly run the python script to use the program and follow the instructions on the console.
+Please note that the following files need to be in the same directory as the script for the program to run correctly:
+* chicago.csv
+* new_york_city.csv
+* washington.csv
 
 ### Credits
 This is a submission for the Programming for Data Science with Python course on [Udacity](https://www.udacity.com) as a part of the Bertelsmann Next Generation Tech Booster Scholarship Program.
