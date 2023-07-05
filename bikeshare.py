@@ -1,27 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[40]:
-
-
 import time
 import pandas as pd
 import numpy as np
 
-
-# In[41]:
-
-
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
-
-
-# In[42]:
-
+CITY_DATA = {'chicago': 'chicago.csv',
+             'new york city': 'new_york_city.csv',
+             'washington': 'washington.csv'}
 
 # additional functions to use inside the get_filters() function
 # get user input for city (chicago, new york city, washington)
+
+
 def get_city():
     """
     Asks user to specify a city to analyze.
@@ -41,11 +32,9 @@ def get_city():
         else:
             print('Invalid input! Please type Chicago, New York City, or Washington.')
 
-
-# In[43]:
-
-
 # get user input for month (all, january, february, ... , june)
+
+
 def get_month():
     """
     Asks user to specify a month to analyze.
@@ -53,7 +42,7 @@ def get_month():
     Returns:
         (str) month - name of the month to filter by, or "all" to apply no month filter
     """
-    
+
     month_question = 'Which month - January, February, March, April, May, June, or all of them? '
     months = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
     while True:
@@ -63,11 +52,9 @@ def get_month():
         else:
             print('Invalid input! Please type the name of the month or "all".')
 
-
-# In[44]:
-
-
 # get user input for day of week (all, monday, tuesday, ... sunday)
+
+
 def get_day():
     """
     Asks user to specify a day of week to analyze.
@@ -75,9 +62,10 @@ def get_day():
     Returns:
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
-    
+
     day_question = 'Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, or all of them? '
-    days = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    days = ['all', 'monday', 'tuesday', 'wednesday',
+            'thursday', 'friday', 'saturday', 'sunday']
     while True:
         day = input(day_question).lower()
         if day in days:
@@ -85,11 +73,9 @@ def get_day():
         else:
             print('Invalid input! Please type one day of the week or the word "all".')
 
-
-# In[45]:
-
-
 # the final filtering function
+
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -106,7 +92,7 @@ def get_filters():
     city = get_city()
 
     # get user input for filtering (by month, by day, both or none)
-    while True:    
+    while True:
         filter_question = 'Would you like to filter the data by month, by day, both or none? '
         filter_answer = input(filter_question).lower()
 
@@ -140,11 +126,9 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
-
-# In[46]:
-
-
 # helper functions for convert the numbers of month and day of week to their names
+
+
 def number_to_month(month):
     """
     Converts numeric value of month to its corresponding month name.
@@ -167,6 +151,8 @@ def number_to_month(month):
     return months.get(month, None)
 
 # Convert day number to day name
+
+
 def number_to_day(day):
     """
     Converts numeric value of day of week to its corresponding name.
@@ -189,11 +175,9 @@ def number_to_day(day):
 
     return days.get(day, None)
 
-
-# In[58]:
-
-
 # the final function for loading the filtered data
+
+
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
@@ -205,29 +189,27 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     filename = CITY_DATA[city]
     df = pd.read_csv(filename, usecols=lambda x: x != 'Unnamed: 0')
-    
+
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
     df['month'] = df['month'].apply(lambda x: number_to_month(x))
     df['day'] = df['Start Time'].dt.dayofweek
     df['day'] = df['day'].apply(lambda x: number_to_day(x))
-    
+
     if month != 'all':
         df = df[df['month'] == month]
-        
+
     if day != 'all':
         df = df[df['day'] == day]
 
     return df
 
-
-# In[48]:
-
-
 # the function for displaying the data upon user request
+
+
 def display_raw_data(df):
     """
     Displays raw data from the DataFrame in chunks of 5 lines at the user's request.
@@ -260,9 +242,6 @@ def display_raw_data(df):
             print('Invalid input. Please enter "yes" or "no".')
 
 
-# In[49]:
-
-
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -281,12 +260,8 @@ def time_stats(df):
     df['hour'] = df['Start Time'].dt.hour
     common_hour = df['hour'].mode()[0]
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
-
-# In[50]:
 
 
 def station_stats(df):
@@ -316,9 +291,6 @@ def station_stats(df):
     print('-'*40)
 
 
-# In[51]:
-
-
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -333,12 +305,8 @@ def trip_duration_stats(df):
     mean_travel_time = df['Trip Duration'].mean()
     print('Mean travel time:', mean_travel_time)
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
-
-# In[60]:
 
 
 def user_stats(df):
@@ -367,12 +335,8 @@ def user_stats(df):
     print('Most recent birth year:', int(most_recent_birth_year))
     print('Most common birth year:', int(most_common_birth_year))
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
-
-
-# In[53]:
 
 
 def main():
@@ -391,15 +355,5 @@ def main():
             break
 
 
-# In[61]:
-
-
 if __name__ == "__main__":
-	main()
-
-
-# In[ ]:
-
-
-
-
+    main()
