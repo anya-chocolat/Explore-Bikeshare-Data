@@ -12,9 +12,9 @@ import numpy as np
 # In[41]:
 
 
-CITY_DATA = { 'chicago': 'chicago.csv',
-              'new york city': 'new_york_city.csv',
-              'washington': 'washington.csv' }
+CITY_DATA = {'chicago': 'chicago.csv',
+             'new york city': 'new_york_city.csv',
+             'washington': 'washington.csv'}
 
 
 # In[42]:
@@ -53,7 +53,7 @@ def get_month():
     Returns:
         (str) month - name of the month to filter by, or "all" to apply no month filter
     """
-    
+
     month_question = 'Which month - January, February, March, April, May, June, or all of them? '
     months = ['all', 'january', 'february', 'march', 'april', 'may', 'june']
     while True:
@@ -75,9 +75,10 @@ def get_day():
     Returns:
         (str) day - name of the day of week to filter by, or "all" to apply no day filter
     """
-    
+
     day_question = 'Which day - Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday, or all of them? '
-    days = ['all', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+    days = ['all', 'monday', 'tuesday', 'wednesday',
+            'thursday', 'friday', 'saturday', 'sunday']
     while True:
         day = input(day_question).lower()
         if day in days:
@@ -106,7 +107,7 @@ def get_filters():
     city = get_city()
 
     # get user input for filtering (by month, by day, both or none)
-    while True:    
+    while True:
         filter_question = 'Would you like to filter the data by month, by day, both or none? '
         filter_answer = input(filter_question).lower()
 
@@ -137,7 +138,7 @@ def get_filters():
         else:
             print('Invalid choice. Please try again.')
 
-    print('-'*40)
+    print('-' * 40)
     return city, month, day
 
 
@@ -167,6 +168,8 @@ def number_to_month(month):
     return months.get(month, None)
 
 # Convert day number to day name
+
+
 def number_to_day(day):
     """
     Converts numeric value of day of week to its corresponding name.
@@ -205,19 +208,19 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     filename = CITY_DATA[city]
     df = pd.read_csv(filename, usecols=lambda x: x != 'Unnamed: 0')
-    
+
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['month'] = df['Start Time'].dt.month
     df['month'] = df['month'].apply(lambda x: number_to_month(x))
     df['day'] = df['Start Time'].dt.dayofweek
     df['day'] = df['day'].apply(lambda x: number_to_day(x))
-    
+
     if month != 'all':
         df = df[df['month'] == month]
-        
+
     if day != 'all':
         df = df[df['day'] == day]
 
@@ -242,9 +245,9 @@ def display_raw_data(df):
     start_index = 0
     while True:
         display_data = input(
-            'Would you like to see 5 lines of the data? Enter "yes" or "no": ').lower()
+            'Would you like to see 5 lines of raw data? Enter "yes" or "no": ').lower()
 
-        if display_data == 'yes':
+        if display_data in ['yes', 'y']:
             if start_index >= len(df):
                 print('No more raw data to display.')
                 break
@@ -254,7 +257,7 @@ def display_raw_data(df):
 
             # increment the starting index for the next iteration
             start_index += 5
-        elif display_data == 'no':
+        elif display_data in ['no', 'n']:
             break
         else:
             print('Invalid input. Please enter "yes" or "no".')
@@ -280,7 +283,6 @@ def time_stats(df):
     # display the most common start hour
     df['hour'] = df['Start Time'].dt.hour
     common_hour = df['hour'].mode()[0]
-
 
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
@@ -333,7 +335,6 @@ def trip_duration_stats(df):
     mean_travel_time = df['Trip Duration'].mean()
     print('Mean travel time:', mean_travel_time)
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -367,7 +368,6 @@ def user_stats(df):
     print('Most recent birth year:', int(most_recent_birth_year))
     print('Most common birth year:', int(most_common_birth_year))
 
-
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -395,11 +395,7 @@ def main():
 
 
 if __name__ == "__main__":
-	main()
+    main()
 
 
 # In[ ]:
-
-
-
-
