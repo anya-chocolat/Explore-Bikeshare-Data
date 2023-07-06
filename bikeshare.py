@@ -357,18 +357,24 @@ def user_stats(df):
         print(f'{user_type}: {count}')
 
     # display counts of gender
-    gender_counts = df['Gender'].value_counts()
-    print('Counts of gender:')
-    for gender, count in gender_counts.items():
-        print(f'{gender}: {count}')
+    # gender only exists in the data for new york and chicago
+    # so first we need to check if it exists
+    if 'Gender' in df:
+        gender_counts = df['Gender'].value_counts()
+        print('Counts of gender:')
+        for gender, count in gender_counts.items():
+            print(f'{gender}: {count}')
 
     # display earliest, most recent, and most common year of birth
-    earliest_birth_year = df['Birth Year'].min()
-    most_recent_birth_year = df['Birth Year'].max()
-    most_common_birth_year = df['Birth Year'].mode()[0]
-    print('Earliest birth year:', int(earliest_birth_year))
-    print('Most recent birth year:', int(most_recent_birth_year))
-    print('Most common birth year:', int(most_common_birth_year))
+    # this info only exists in the data for new york and chicago
+    # so first we need to check if it exists
+    if 'Birth Year' in df:
+        earliest_birth_year = df['Birth Year'].min()
+        most_recent_birth_year = df['Birth Year'].max()
+        most_common_birth_year = df['Birth Year'].mode()[0]
+        print('Earliest birth year:', int(earliest_birth_year))
+        print('Most recent birth year:', int(most_recent_birth_year))
+        print('Most common birth year:', int(most_common_birth_year))
 
     print(f'This took {(time.time() - start_time)} seconds.')
     print('-'*40)
