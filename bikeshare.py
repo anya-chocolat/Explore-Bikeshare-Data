@@ -1,27 +1,18 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[40]:
-
-
 import time
 import pandas as pd
 import numpy as np
-
-
-# In[41]:
-
 
 CITY_DATA = {'chicago': 'chicago.csv',
              'new york city': 'new_york_city.csv',
              'washington': 'washington.csv'}
 
-
-# In[42]:
-
-
 # additional functions to use inside the get_filters() function
 # get user input for city (chicago, new york city, washington)
+
+
 def get_city():
     """
     Asks user to specify a city to analyze.
@@ -41,11 +32,9 @@ def get_city():
         else:
             print('Invalid input! Please type Chicago, New York City, or Washington.')
 
-
-# In[43]:
-
-
 # get user input for month (all, january, february, ... , june)
+
+
 def get_month():
     """
     Asks user to specify a month to analyze.
@@ -63,11 +52,9 @@ def get_month():
         else:
             print('Invalid input! Please type the name of the month or "all".')
 
-
-# In[44]:
-
-
 # get user input for day of week (all, monday, tuesday, ... sunday)
+
+
 def get_day():
     """
     Asks user to specify a day of week to analyze.
@@ -86,11 +73,9 @@ def get_day():
         else:
             print('Invalid input! Please type one day of the week or the word "all".')
 
-
-# In[45]:
-
-
 # the final filtering function
+
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -141,11 +126,9 @@ def get_filters():
     print('-' * 40)
     return city, month, day
 
-
-# In[46]:
-
-
 # helper functions for convert the numbers of month and day of week to their names
+
+
 def number_to_month(month):
     """
     Converts numeric value of month to its corresponding month name.
@@ -192,11 +175,9 @@ def number_to_day(day):
 
     return days.get(day, None)
 
-
-# In[58]:
-
-
 # the final function for loading the filtered data
+
+
 def load_data(city, month, day):
     """
     Loads data for the specified city and filters by month and day if applicable.
@@ -226,11 +207,9 @@ def load_data(city, month, day):
 
     return df
 
-
-# In[48]:
-
-
 # the function for displaying the data upon user request
+
+
 def display_raw_data(df):
     """
     Displays raw data from the DataFrame in chunks of 5 lines at the user's request.
@@ -263,9 +242,6 @@ def display_raw_data(df):
             print('Invalid input. Please enter "yes" or "no".')
 
 
-# In[49]:
-
-
 def time_stats(df):
     """Displays statistics on the most frequent times of travel."""
 
@@ -286,9 +262,6 @@ def time_stats(df):
 
     print(f'This took {(time.time() - start_time)} seconds.')
     print('-'*40)
-
-
-# In[50]:
 
 
 def station_stats(df):
@@ -318,9 +291,6 @@ def station_stats(df):
     print('-'*40)
 
 
-# In[51]:
-
-
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -339,9 +309,6 @@ def trip_duration_stats(df):
 
     print(f'This took {(time.time() - start_time)} seconds.')
     print('-'*40)
-
-
-# In[60]:
 
 
 def user_stats(df):
@@ -380,9 +347,6 @@ def user_stats(df):
     print('-'*40)
 
 
-# In[53]:
-
-
 def main():
     while True:
         city, month, day = get_filters()
@@ -399,11 +363,5 @@ def main():
             break
 
 
-# In[61]:
-
-
 if __name__ == "__main__":
     main()
-
-
-# In[ ]:
